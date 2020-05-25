@@ -138,20 +138,22 @@ class MySQLStorage(object):
     insert_current = ("INSERT INTO CurrentVersions(local_path,\
                           modified_date,download_date,source_domain,url,\
                           html_title, ancestor, descendant, version,\
-                          rss_title) VALUES (%(local_path)s,\
+                          rss_title,maintext) VALUES (%(local_path)s,\
                           %(modified_date)s, %(download_date)s,\
                           %(source_domain)s, %(url)s, %(html_title)s,\
                           %(ancestor)s, %(descendant)s, %(version)s,\
-                          %(rss_title)s)")
+                          %(rss_title)s,\
+                          %(maintext)s)")
 
     insert_archive = ("INSERT INTO ArchiveVersions(id, local_path,\
                           modified_date,download_date,source_domain,url,\
                           html_title, ancestor, descendant, version,\
-                          rss_title) VALUES (%(db_id)s, %(local_path)s,\
+                          rss_title,maintext) VALUES (%(db_id)s, %(local_path)s,\
                           %(modified_date)s, %(download_date)s,\
                           %(source_domain)s, %(url)s, %(html_title)s,\
                           %(ancestor)s, %(descendant)s, %(version)s,\
-                          %(rss_title)s)")
+                          %(rss_title)s,\
+                          %(maintext)s)")
 
     delete_from_current = ("DELETE FROM CurrentVersions WHERE id = %s")
 
@@ -205,7 +207,8 @@ class MySQLStorage(object):
                 'ancestor': old_version[7],
                 'descendant': old_version[8],
                 'version': old_version[9],
-                'rss_title': old_version[10], }
+                'rss_title': old_version[10],
+                'maintext': old_version[11] }
 
             # Update the version number and the ancestor variable for later references
             version = (old_version[9] + 1)
@@ -222,7 +225,8 @@ class MySQLStorage(object):
             'ancestor': ancestor,
             'descendant': 0,
             'version': version,
-            'rss_title': item['rss_title'], }
+            'rss_title': item['rss_title'],
+            'maintext': item['article_text'] }
 
         try:
             self.cursor.execute(self.insert_current, current_version_list)

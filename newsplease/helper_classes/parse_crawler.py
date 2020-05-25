@@ -101,6 +101,10 @@ class ParseCrawler(object):
         # Recursivly crawl all URLs on the current page
         # that do not point to irrelevant file types
         # or contain any of the given ignore_regex regexes
+        #f = open("log.log","a")
+        #f.write("\r\n")
+        #f.write(href)
+        #f.close()
         return [
             scrapy.Request(response.urljoin(href), callback=spider.parse)
             for href in response.css("a::attr('href')").extract() if re.match(
