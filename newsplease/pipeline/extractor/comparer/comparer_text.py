@@ -55,14 +55,20 @@ class ComparerText():
 
                 # Create the score. It divides the number of words which are not in both texts by the number of words which
                 # are in both texts and subtracts the result from 1. The closer to 1 the more similiar they are.
-                score = 1 - ((len(symmetric_difference_a_b)) / (2 * len(intersection_a_b)))
-                list_score.append((score, a[1], b[1]))
+                #try:
+                    score = 1 - ((len(symmetric_difference_a_b)) / (2 * len(intersection_a_b)))
+                    list_score.append((score, a[1], b[1]))
+                #except:
+                #    return None
 
             # Find out which is the highest score
-            best_score = max(list_score, key=lambda item: item[0])
-
+            try:
+                best_score = max(list_score, key=lambda item: item[0])
+            except:
+                best_score = None
+            print(list_score)
             # If one of the solutions is newspaper return it
-            if "newspaper" in best_score:
+            if best_score is not None and "newspaper" in best_score:
                 return (list(filter(lambda x: x[1] == "newspaper", list_text))[0][0])
             else:
                 # If not, return the text that is longer
@@ -70,7 +76,9 @@ class ComparerText():
                 # A list that holds the extracted texts and their extractors which were most similar
                 top_candidates = []
                 for tuple in list_text:
-                    if tuple[1] == best_score[1] or tuple[1] == best_score[2]:
+                    if best_score is not None and (tuple[1] == best_score[1] or tuple[1] == best_score[2]):
+                        top_candidates.append(tuple)
+                    else:
                         top_candidates.append(tuple)
 
                 if len(top_candidates[0][0]) > len(top_candidates[1][0]):

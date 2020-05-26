@@ -21,7 +21,8 @@ class ReadabilityExtractor(AbstractExtractor):
         :param item: A NewscrawlerItem to parse.
         :return: ArticleCandidate containing the recovered article data.
         """
-
+        
+        description = None
         doc = BeautifulSoup(item['spider_response'].body,'html.parser')
         article = doc.find_all('article')
         if article:
