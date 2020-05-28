@@ -29,7 +29,7 @@ class SimpleCrawler(object):
         headers = {'User-Agent': 'Mozilla/5.0'}
         req = urllib.request.Request(url, None, headers)
         html = urllib.request.urlopen(req, data=None, timeout=timeout).read()
-
+        
         if is_threaded:
             SimpleCrawler._results[url] = html
 

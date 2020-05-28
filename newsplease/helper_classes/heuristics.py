@@ -99,6 +99,9 @@ class Heuristics(HeuristicsManager):
 
         self.log.debug("Linked headlines test: headlines = %s, linked = %s",
                        h_all, h_linked)
+        #f = open("log.log","a")
+        #f.write("Linked headlines test: headlines = %s, linked = %s" % (h_all, h_linked))
+        #f.close()
 
         min_headlines = self.cfg_heuristics["min_headlines_for_linked_test"]
         if min_headlines > h_all:

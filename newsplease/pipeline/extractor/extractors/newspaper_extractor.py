@@ -28,6 +28,7 @@ class NewspaperExtractor(AbstractExtractor):
         article = Article('')
         article.set_html(item['spider_response'].body)
         article.parse()
+
         article_candidate.title = article.title
         article_candidate.description = article.meta_description
         article_candidate.text = article.text

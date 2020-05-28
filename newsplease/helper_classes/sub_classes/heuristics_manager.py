@@ -45,7 +45,8 @@ class HeuristicsManager(object):
         """
         site = self.__sites_object[url]
         heuristics = self.__get_enabled_heuristics(url)
-
+        #f = open("log.log","a")
+        #f.write("\r\n" + response.url + "\r\n")
         self.log.info("Checking site: %s", response.url)
 
         statement = self.__get_condition(url)
@@ -60,10 +61,13 @@ class HeuristicsManager(object):
             self.log.debug("Checking heuristic (%s)"
                            " result (%s) on condition (%s): %s",
                            heuristic, result, condition, check)
-
+            #f.write("Checking heuristic " + str(heuristic) + " result " + str(result) + " on " + str(condition) + ": " + str(check) + "\r\n")
         self.log.debug("Condition (evaluated): %s", statement)
+        #f.write("Condition (evaluated): " + str(statement))
         is_article = eval(statement)
         self.log.debug("Article accepted: %s", is_article)
+        #f.write("Article accepted: "+ str(is_article) + "\r\n")
+        #f.close()
         return is_article
 
     def __get_condition(self, url):

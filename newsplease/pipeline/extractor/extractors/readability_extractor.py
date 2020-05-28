@@ -25,14 +25,6 @@ class ReadabilityExtractor(AbstractExtractor):
         doc = Document(deepcopy(item['spider_response'].body))
         description = doc.summary()
 
-        """
-        f = open("log.log","a")
-        f.write(description)
-        f.write("\r\n")
-        f.write("TEXT: " + self._text(item))
-        f.close()
-        """
-
         text = self._text(item)
         if text is None:
            text = description

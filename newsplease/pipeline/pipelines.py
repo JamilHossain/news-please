@@ -138,21 +138,25 @@ class MySQLStorage(object):
     insert_current = ("INSERT INTO CurrentVersions(local_path,\
                           modified_date,download_date,source_domain,url,\
                           html_title, ancestor, descendant, version,\
-                          rss_title,maintext) VALUES (%(local_path)s,\
+                          rss_title,image_url,date_publish,maintext) VALUES (%(local_path)s,\
                           %(modified_date)s, %(download_date)s,\
                           %(source_domain)s, %(url)s, %(html_title)s,\
                           %(ancestor)s, %(descendant)s, %(version)s,\
                           %(rss_title)s,\
+                          %(image_url)s,\
+                          %(date_publish)s,\
                           %(maintext)s)")
 
     insert_archive = ("INSERT INTO ArchiveVersions(id, local_path,\
                           modified_date,download_date,source_domain,url,\
                           html_title, ancestor, descendant, version,\
-                          rss_title,maintext) VALUES (%(db_id)s, %(local_path)s,\
+                          rss_title,image_url,date_publish,maintext) VALUES (%(db_id)s, %(local_path)s,\
                           %(modified_date)s, %(download_date)s,\
                           %(source_domain)s, %(url)s, %(html_title)s,\
                           %(ancestor)s, %(descendant)s, %(version)s,\
                           %(rss_title)s,\
+                          %(image_url)s,\
+                          %(date_publish)s,\
                           %(maintext)s)")
 
     delete_from_current = ("DELETE FROM CurrentVersions WHERE id = %s")
@@ -208,7 +212,9 @@ class MySQLStorage(object):
                 'descendant': old_version[8],
                 'version': old_version[9],
                 'rss_title': old_version[10],
-                'maintext': old_version[11] }
+                'image_url': old_version[11],
+                'date_publish': old_version[12],
+                'maintext': old_version[13] }
 
             # Update the version number and the ancestor variable for later references
             version = (old_version[9] + 1)
@@ -226,6 +232,8 @@ class MySQLStorage(object):
             'descendant': 0,
             'version': version,
             'rss_title': item['rss_title'],
+            'image_url': item['article_image'],
+            'date_publish': item['article_publish_date'],
             'maintext': item['article_text'] }
 
         try:

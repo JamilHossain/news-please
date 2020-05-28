@@ -21,7 +21,7 @@ class LangExtractor(AbstractExtractor):
     def _language(self, item):
         """Returns the language of the extracted article by analyzing metatags and inspecting the visible text
         with langdetect"""
-
+        
         response = item['spider_response'].body
         root = html.fromstring(response)
 
